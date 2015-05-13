@@ -1,3 +1,10 @@
 <template name="project">
+<div>
+	<button class="edit">edit</button>
+	{{#if editing}}
+	<input placeholder="Add project" value="{{ name }}">
+	{{else}}
 	<h1>{{ name }}</h1>
+	{{/if}}
+</div>
 </template>
