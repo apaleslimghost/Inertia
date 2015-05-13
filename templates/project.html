@@ -3,8 +3,19 @@
 	<button class="edit">edit</button>
 	{{#if editing}}
 	<input placeholder="Add project" value="{{ name }}">
+	<button class="delete">delete</button>
 	{{else}}
 	<h1>{{ name }}</h1>
+	<h2>{{ timeElapsed }}</h2>
+	{{#if timeElapsed}}
+	<button class="stop">stop</button>
+	{{else}}
+	<button class="start">start</button>
 	{{/if}}
+	{{/if}}
+
+	{{#each timings}}
+	{{created}} <time>{{time}}</time>
+	{{/each}}
 </div>
 </template>

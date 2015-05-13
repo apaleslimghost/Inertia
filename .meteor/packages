@@ -8,5 +8,7 @@ meteor-platform
 autopublish
 insecure
 fourseven:scss
-underscore
 reactive-var
+momentjs:moment
+remcoder:chronos
+erasaur:meteor-lodash
