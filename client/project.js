@@ -5,12 +5,13 @@ Template.project.events({
 
 	'click .stop': function(ev, template) {
 		var time = moment().diff(template.started.get());
-		console.log(time);
 		Timings.insert({
 			projectId: this.id,
 			time: time,
 			created: new Date
 		});
+
+		template.started.set(null);
 	},
 
 	'click .edit': function(ev, template) {
