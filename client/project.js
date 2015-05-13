@@ -6,7 +6,7 @@ Template.project.events({
 	'click .stop': function(ev, template) {
 		var time = moment().diff(template.started.get());
 		Timings.insert({
-			projectId: this.id,
+			projectId: this._id,
 			time: time,
 			created: new Date
 		});
@@ -46,6 +46,14 @@ Template.project.onCreated(function () {
 	this.started = new ReactiveVar(null);
 });
 
+function formatInterval(ival) {
+	return _.compact([
+		ival.hours() && _.padLeft(ival.hours(), 2, '0'),
+		ival.minutes() || '0',
+		ival.hours() ? false : _.padLeft(ival.seconds(), 2, '0')
+	]).join(':');
+}
+
 Template.project.helpers({
 	editing: function() {
 		return !this._id || Template.instance().editing.get();
@@ -54,16 +62,17 @@ Template.project.helpers({
 	timeElapsed: function() {
 		var started = Template.instance().started.get();
 		if(started) {
-			var diff = moment.duration(Chronos.liveMoment().diff(started))
-			return _.compact([
-				diff.hours() && _.padLeft(diff.hours(), 2, '0'),
-				diff.minutes() || '0',
-				diff.hours() ? false : _.padLeft(diff.seconds(), 2, '0')
-			]).join(':');
+			return formatInterval(moment.duration(Chronos.liveMoment().diff(started)));
 		}
 	},
 
 	timings: function() {
 		return Timings.find({projectId: this._id});
+	},
+
+	total: function() {
+		return formatInterval(Timings.find({projectId: this._id}).fetch().reduce(function(total, timing) {
+			return total.add(timing.time, 'ms');
+		}, moment.duration(0)));
 	}
 });
