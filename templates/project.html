@@ -1,19 +1,17 @@
 <template name="project">
-<div>
+<li class="project">
 	<button class="edit">edit</button>
 	{{#if editing}}
-	<input placeholder="Add project" value="{{ name }}">
-	<button class="delete">delete</button>
+		<input class="project-name project-name-edit" type="text" placeholder="Add project..." value="{{ name }}">
 	{{else}}
-	<h1>{{ name }}</h1>
-	<h2>{{ timeElapsed }}</h2>
-	{{#if timeElapsed}}
-	<button class="stop">stop</button>
-	{{else}}
-	<button class="start">start</button>
+		<h1 class="project-name">{{ name }}</h1>
+		<time class="project-time">
+			{{#if inProgress}}
+				{{ timeElapsed }}
+			{{else}}
+				{{ total }}
+			{{/if}}
+		</time>
 	{{/if}}
-	{{/if}}
-
-	total: {{total}}
-</div>
+</li>
 </template>

@@ -1,9 +1,13 @@
 Template.project.events({
-	'click .start': function(ev, template) {
-		template.started.set(new Date);
+	'click': function(ev, template) {
+		if(!template.editing.get()) {
+			template.started.set(new Date);
+		}
 	},
 
 	'click .stop': function(ev, template) {
+		ev.stopPropagation();
+
 		var time = moment().diff(template.started.get());
 		Timings.insert({
 			projectId: this._id,
@@ -15,10 +19,12 @@ Template.project.events({
 	},
 
 	'click .edit': function(ev, template) {
+		ev.stopPropagation();
 		template.editing.set(!template.editing.get());
 	},
 	
-	'click .delete': function() {
+	'click .delete': function(ev) {
+		ev.stopPropagation();
 		if(confirm('Delete ' + this.name + '?')) {
 			Projects.remove({_id: this._id});
 		}
@@ -64,6 +70,10 @@ Template.project.helpers({
 		if(started) {
 			return formatInterval(moment.duration(Chronos.liveMoment().diff(started)));
 		}
+	},
+
+	inProgress: function() {
+		return !!Template.instance().started.get();
 	},
 
 	timings: function() {

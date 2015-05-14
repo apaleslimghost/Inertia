@@ -1,5 +1,36 @@
-/* CSS declarations go here */
-
-[contenteditable][placeholder]:empty:before {
-	content: attr(placeholder);
+.projects {
+	list-style: none;
+	margin: 0 auto;
+	padding: 0;
+	width: 100%;
+	max-width: 400px;
 }
+
+.project {
+	background: #C30;
+	margin: 10px;
+	padding: 20px;
+	border-radius: 5px;
+	color: white;
+	font-family: "Fira Sans";
+}
+
+.project-name-edit {
+	background: transparent;
+	border: 0 none;
+	font: inherit;
+	color: inherit;
+}
+
+.project-name-edit::-webkit-input-placeholder {
+	color: inherit;
+	opacity: 0.5;
+}
+
+.project-name {
+	font-weight: 100;
+	font-style: italic;
+	font-size: 3rem;
+}
+
+
