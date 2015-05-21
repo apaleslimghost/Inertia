@@ -9,14 +9,13 @@
 }
 
 .project {
-	height: 108px;
+	overflow: hidden; 
 	background: #C10;
 	margin: 10px;
 	padding: 20px;
 	border-radius: 5px;
 	color: white;
 	font-family: "Fira Sans";
-	text-align: center;
 
 	transition-duration: 0.2s;
 	transition-property: box-shadow background transform border;
@@ -63,15 +62,31 @@
 	opacity: 0.5;
 }
 
+.project-name, .project-time {
+	display: block;
+	line-height: 1.4;
+}
+
 .project-name {
+	float: left;
 	font-weight: 100;
 	font-style: italic;
 	font-size: 3rem;
-	display: inline;
+	margin: 0
 }
 
 .project-time {
+	float: right;
+	text-align: right;
 	font-size: 3rem;
 	font-weight: 900;
-	margin-left: 0.5em;
+}
+
+.timechar {
+	display: inline-block;
+	width: 0.55em;
+}
+
+.timecolon {
+	width: 0.3em;
 }

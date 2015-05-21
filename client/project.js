@@ -55,7 +55,9 @@ function formatInterval(ival) {
 		ival.hours() && _.padLeft(ival.hours(), 2, '0'),
 		ival.minutes() || '0',
 		ival.hours() ? false : _.padLeft(ival.seconds(), 2, '0')
-	]).join(':');
+	]).join(':').split('').map(function(c) {
+		return '<span class="timechar' + (c === ':' ? ' timecolon' : '') + '">' + c + '</span>';
+	}).join('');
 }
 
 Template.project.helpers({
@@ -80,7 +82,6 @@ Template.project.helpers({
 
 	total: function() {
 		return formatInterval(Timings.find({projectId: this._id}).fetch().reduce(function(total, timing) {
-			console.log(timing);
 			return total.add(timing.time, 'ms');
 		}, moment.duration(0)));
 	}
