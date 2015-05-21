@@ -1,6 +1,5 @@
 <template name="project">
-<li class="project">
-	<button class="edit">edit</button>
+<li class="project {{#if editing}}project-editing{{else}}{{#if inProgress}}project-inprogress{{else}}project-stopped{{/if}}{{/if}}">
 	{{#if editing}}
 		<input class="project-name project-name-edit" type="text" placeholder="Add project..." value="{{ name }}">
 	{{else}}

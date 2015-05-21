@@ -1,14 +1,13 @@
 Template.project.events({
-	'click': function(ev, template) {
+	'click .project-stopped': function(ev, template) {
 		if(!template.editing.get()) {
 			template.started.set(new Date);
 		}
 	},
 
-	'click .stop': function(ev, template) {
-		ev.stopPropagation();
-
+	'click .project-inprogress': function(ev, template) {
 		var time = moment().diff(template.started.get());
+		console.log(time);
 		Timings.insert({
 			projectId: this._id,
 			time: time,
@@ -19,7 +18,6 @@ Template.project.events({
 	},
 
 	'click .edit': function(ev, template) {
-		ev.stopPropagation();
 		template.editing.set(!template.editing.get());
 	},
 	
@@ -82,6 +80,7 @@ Template.project.helpers({
 
 	total: function() {
 		return formatInterval(Timings.find({projectId: this._id}).fetch().reduce(function(total, timing) {
+			console.log(timing);
 			return total.add(timing.time, 'ms');
 		}, moment.duration(0)));
 	}
