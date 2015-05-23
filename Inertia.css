@@ -17,6 +17,9 @@
 	color: white;
 	font-family: "Fira Sans";
 
+	border: 1px solid #C10;
+	border-width: 3px 1px 0;
+
 	transition-duration: 0.2s;
 	transition-property: box-shadow background transform border;
 }
@@ -37,9 +40,7 @@
 .project-inprogress {
 	transform: translateY(5px);
 	border-color: #660500;
-	border-style: solid;
-	border-width: 3px 1px 0;
-	box-shadow: 0 0 0 transparent;
+	box-shadow: 0 0 0 #C10;
 	background: #990800;
 	margin-bottom: 5px;
 }
