@@ -20,7 +20,7 @@
 	border: 1px solid #C10;
 	border-width: 3px 1px 0;
 
-	transition-duration: 0.2s;
+	transition-duration: 0.15s;
 	transition-property: box-shadow background transform border;
 }
 
