@@ -46,9 +46,19 @@ Template.project.events({
 	}
 });
 
-Template.project.onCreated(function() {
+Template.project.onCreated(function() {console.log
 	this.editing = new ReactiveVar(false);
 	this.started = new ReactiveVar(null);
+});
+
+Template.project.onRendered(function() {
+	var name = this.$('.project-name');
+	var time = this.$('.project-time');
+	var container = this.$('.project');
+
+	if(20 + name.width() + time.width() > container.width()) {
+		container.css('font-size', (3 * container.width() / (name.width() + time.width() + 20)) + 'rem');
+	}
 });
 
 function formatInterval(ival) {

@@ -9,6 +9,7 @@
 }
 
 .project {
+	font-size: 3rem;
 	position: relative;
 	overflow: hidden; 
 	background: #ddd;
@@ -22,7 +23,7 @@
 	border-width: 3px 1px 0;
 
 	transition-duration: 0.15s;
-	transition-property: box-shadow background transform border;
+	transition-property: box-shadow, background, transform, border;
 }
 
 .project-inprogress, .project-stopped {
@@ -60,7 +61,6 @@
 	right: 20px;
 	top: 20px;
 	line-height: 2;
-	font-size: 2.5rem;
 	font-style: italic;
 	font-family: sans-serif;
 }
@@ -89,14 +89,13 @@
 	float: left;
 	font-weight: 100;
 	font-style: italic;
-	font-size: 3rem;
+	font-size: inherit;
 	margin: 0
 }
 
 .project-time {
 	float: right;
 	text-align: right;
-	font-size: 3rem;
 	font-weight: 900;
 }
 
