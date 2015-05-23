@@ -7,7 +7,6 @@ Template.project.events({
 
 	'click .project-inprogress': function(ev, template) {
 		var time = moment().diff(template.started.get());
-		console.log(time);
 		Timings.insert({
 			projectId: this._id,
 			time: time,
@@ -40,6 +39,7 @@ Template.project.events({
 				}
 			});
 			ev.currentTarget.value = '';
+			ev.currentTarget.blur();
 			template.editing.set(false);
 		}
 	}
