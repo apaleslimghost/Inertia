@@ -1,3 +1,5 @@
+
+
 Template.project.events({
 	'click .project-stopped': function(ev, template) {
 		if(!template.editing.get()) {
@@ -46,19 +48,22 @@ Template.project.events({
 	}
 });
 
-Template.project.onCreated(function() {console.log
+Template.project.onCreated(function() {
 	this.editing = new ReactiveVar(false);
 	this.started = new ReactiveVar(null);
 });
 
-Template.project.onRendered(function() {
-	var name = this.$('.project-name');
-	var time = this.$('.project-time');
-	var container = this.$('.project');
+function adjustSize(container, name, time) {
+	return function() {
+		if(20 + name.width() + time.width() > container.width()) {
+			container.css('font-size', (3 * container.width() / (name.width() + time.width() + 20)) + 'rem');
+		}
+	};
+}
 
-	if(20 + name.width() + time.width() > container.width()) {
-		container.css('font-size', (3 * container.width() / (name.width() + time.width() + 20)) + 'rem');
-	}
+Template.project.onRendered(function() {
+	var doAdjustSize = adjustSize(this.$('.project'), this.$('.project-name'), this.$('.project-time'));
+	fontsLoaded(doAdjustSize);
 });
 
 function formatInterval(ival) {
