@@ -1,5 +1,26 @@
 <template name="project">
-<li class="project {{#if editing}}project-editing{{else}}{{#if inProgress}}project-inprogress{{else}}project-stopped{{/if}}{{/if}}">
+{{#if _id}}
+<style>
+.project-{{_id}} {
+	background: {{baseColour}};
+	border-color: {{baseColour}};
+}
+
+.project-{{_id}}.project-stopped {
+	box-shadow: 0 5px 0 {{darkColour2}};
+}
+
+.project-{{_id}}.project-stopped:hover {
+	box-shadow: 0 7px 0 {{darkColour2}};
+}
+
+.project-{{_id}}.project-inprogress {
+	border-color: {{darkColour2}};
+	background: {{darkColour1}};
+}
+</style>
+{{/if}}
+<li class="project project-{{_id}} {{#if editing}}project-editing{{else}}{{#if inProgress}}project-inprogress{{else}}project-stopped{{/if}}{{/if}}">
 	{{#if editing}}
 		<input class="project-name project-name-edit" type="text" placeholder="Add project..." value="{{ name }}">
 	{{else}}

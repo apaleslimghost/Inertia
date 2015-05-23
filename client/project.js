@@ -32,7 +32,8 @@ Template.project.events({
 			Projects.upsert({_id: this._id}, {
 				$set: {
 					name: ev.currentTarget.value,
-					updated: new Date
+					updated: new Date,
+					colour: createColour(ev.currentTarget.value)
 				},
 				$setOnInsert: {
 					created: new Date
@@ -45,7 +46,7 @@ Template.project.events({
 	}
 });
 
-Template.project.onCreated(function () {
+Template.project.onCreated(function() {
 	this.editing = new ReactiveVar(false);
 	this.started = new ReactiveVar(null);
 });
@@ -58,6 +59,20 @@ function formatInterval(ival) {
 	]).join(':').split('').map(function(c) {
 		return '<span class="timechar' + (c === ':' ? ' timecolon' : '') + '">' + c + '</span>';
 	}).join('');
+}
+
+function hash(name) {
+	return [].reduce.call(name, function(hash, chr) {
+		return ((hash << 5) - hash) + chr.charCodeAt(0);
+	}, 0);
+}
+
+function createColour(name) {
+	return tinycolor({
+		h: (hash(name) * 137.5) % 360,
+		s: .75,
+		l: .6
+	}).toHexString();
 }
 
 Template.project.helpers({
@@ -84,5 +99,24 @@ Template.project.helpers({
 		return formatInterval(Timings.find({projectId: this._id}).fetch().reduce(function(total, timing) {
 			return total.add(timing.time, 'ms');
 		}, moment.duration(0)));
+	},
+	
+	baseColour: function() {
+		var baseColour = tinycolor(this.colour);
+		return baseColour.toHexString();
+	},
+	
+	darkColour1: function() {
+		var baseColour = tinycolor(this.colour);
+		return baseColour.darken(10).toHexString();
+	},
+
+	darkColour2: function() {
+		var baseColour = tinycolor(this.colour);
+		return baseColour.darken(20).toHexString();
+	},
+
+	textColour: function() {
+		return tinycolor.mostReadable(this.colour, ['white', 'black']).toHexString();
 	}
 });

@@ -10,14 +10,14 @@
 
 .project {
 	overflow: hidden; 
-	background: #C10;
+	background: #ddd;
 	margin: 10px;
 	padding: 20px;
 	border-radius: 5px;
 	color: white;
 	font-family: "Fira Sans";
 
-	border: 1px solid #C10;
+	border-style: solid;
 	border-width: 3px 1px 0;
 
 	transition-duration: 0.15s;
@@ -29,19 +29,14 @@
 }
 
 .project-stopped {
-	box-shadow: 0 5px 0 #660500;
 }
 
 .project-stopped:hover {
 	transform: translateY(-2px);
-	box-shadow: 0 7px 0 #660500;
 }
 
 .project-inprogress {
 	transform: translateY(5px);
-	border-color: #660500;
-	box-shadow: 0 0 0 #C10;
-	background: #990800;
 	margin-bottom: 5px;
 }
 
@@ -55,12 +50,12 @@
 }
 
 .project-editing {
-	border: 1px solid #990800;
+	border: 1px solid rgba(0,0,0,0.2);
 }
 
 .project-name-edit::-webkit-input-placeholder {
 	color: inherit;
-	opacity: 0.5;
+	opacity: 0.7;
 }
 
 .project-name, .project-time {
