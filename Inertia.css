@@ -46,14 +46,18 @@
 	font: inherit;
 	color: inherit;
 	width: 100%;
-	text-align: center;
 }
 
 .project-editing {
 	border: 1px solid rgba(0,0,0,0.2);
 }
 
+.project-name-edit:focus {
+	outline: none;
+}
+
 .project-name-edit::-webkit-input-placeholder {
+	text-align: center;
 	color: inherit;
 	opacity: 0.7;
 }
