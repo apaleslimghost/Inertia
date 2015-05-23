@@ -84,7 +84,7 @@ function hash(name) {
 
 function createColour(name) {
 	return tinycolor({
-		h: (hash(name) * 137.5) % 360,
+		h: ((hash(name) * 137.5) % 360 + 360) % 360,
 		s: .75,
 		l: .6
 	}).toHexString();
