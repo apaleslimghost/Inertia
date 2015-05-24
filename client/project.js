@@ -137,6 +137,11 @@ Template.project.helpers({
 		return baseColour.darken(20).toHexString();
 	},
 
+	activeColour: function() {
+		var baseColour = tinycolor(this.colour);
+		return baseColour.saturate(20).toHexString();
+	},
+
 	textColour: function() {
 		return tinycolor.mostReadable(this.colour, ['white', 'black']).toHexString();
 	}
