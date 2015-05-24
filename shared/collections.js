@@ -1,19 +1,22 @@
-SyncProjects = new Mongo.Collection('projects');
-SyncTimings = new Mongo.Collection('timings');
+function HybridCollection(name) {
+	var Sync =  new Meteor.Collection(name);
+	var Local = new Meteor.Collection(null);
 
-LocalProjects = new Mongo.Collection(null);
-LocalTimings = new Mongo.Collection(null);
+	if(Meteor.isClient) {
+		new LocalPersist(Local, name);
+	}
 
-if(Meteor.isClient) {
-	new LocalPersist(LocalProjects, 'projects');
-	new LocalPersist(LocalTimings, 'timings');
-}
+	if(Meteor.isServer) {
+		Meteor.publish(name, function() {
+			return Sync.find({owner: this.userId});
+		});
+	}
 
-function localOrSync(local, sync) {
 	return function() {
-		return Meteor.user() ? sync : local;
+		return Meteor.user() ? Sync : Local;
 	};
 }
 
-Projects = localOrSync(LocalProjects, SyncProjects);
-Timings = localOrSync(LocalTimings, SyncTimings);
+Projects = HybridCollection('projects');
+Timings = HybridCollection('timings');
+

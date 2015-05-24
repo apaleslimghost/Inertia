@@ -4,6 +4,7 @@ Template.project.events({
 	'click .project-stopped': function(ev, template) {
 		if(!template.editing.get()) {
 			var id = Timings().insert({
+				owner: Meteor.userId(),
 				projectId: this._id,
 				started: new Date
 			});
@@ -43,6 +44,7 @@ Template.project.events({
 					colour: createColour(ev.currentTarget.value)
 				},
 				$setOnInsert: {
+					owner: Meteor.userId(),
 					created: new Date
 				}
 			});
