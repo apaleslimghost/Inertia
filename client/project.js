@@ -3,19 +3,24 @@
 Template.project.events({
 	'click .project-stopped': function(ev, template) {
 		if(!template.editing.get()) {
-			template.started.set(new Date);
+			var id = Timings.insert({
+				projectId: this._id,
+				started: new Date
+			});
+
+			Projects.update(this._id, {$set: {inProgressTimer: id}});
 		}
 	},
 
 	'click .project-inprogress': function(ev, template) {
-		var time = moment().diff(template.started.get());
-		Timings.insert({
-			projectId: this._id,
-			time: time,
-			created: new Date
-		});
+		var timing = Timings.findOne(this.inProgressTimer);
+		var time = moment().diff(timing.started);
 
-		template.started.set(null);
+		Timings.update(timing._id, {$set: {
+			ended: new Date,
+			time: time
+		}});
+		Projects.update(this._id, {$unset: {inProgressTimer: null}});
 	},
 
 	'click .edit': function(ev, template) {
@@ -25,13 +30,13 @@ Template.project.events({
 	'click .delete': function(ev) {
 		ev.stopPropagation();
 		if(confirm('Delete ' + this.name + '?')) {
-			Projects.remove({_id: this._id});
+			Projects.remove(this._id);
 		}
 	},
 
 	'keyup input': function(ev, template) {
 		if(ev.which === 13) {
-			Projects.upsert({_id: this._id}, {
+			Projects.upsert(this._id, {
 				$set: {
 					name: ev.currentTarget.value,
 					updated: new Date,
@@ -50,7 +55,6 @@ Template.project.events({
 
 Template.project.onCreated(function() {
 	this.editing = new ReactiveVar(false);
-	this.started = new ReactiveVar(null);
 });
 
 function adjustSize(container, name, time) {
@@ -96,14 +100,14 @@ Template.project.helpers({
 	},
 
 	timeElapsed: function() {
-		var started = Template.instance().started.get();
-		if(started) {
-			return formatInterval(moment.duration(Chronos.liveMoment().diff(started)));
+		var timing = this.inProgressTimer && Timings.findOne(this.inProgressTimer);
+		if(timing) {
+			return formatInterval(moment.duration(Chronos.liveMoment().diff(timing.started)));
 		}
 	},
 
 	inProgress: function() {
-		return !!Template.instance().started.get();
+		return !!this.inProgressTimer;
 	},
 
 	timings: function() {
