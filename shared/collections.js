@@ -1,9 +1,25 @@
+var syncCollections = {};
+var localCollections = {};
+
+//TODO: this is stupid
+upsert = function upsert(collection, selector, doc, cb) {
+	if(collection.findOne(selector)) {
+		collection.update(selector, doc.$set, cb);
+	} else {
+		var set = _.extend(doc.$set, doc.$setOnInsert);
+		collection.insert(set, cb);
+	}
+}
+
 function HybridCollection(name) {
-	var Sync =  new Meteor.Collection(name);
-	var Local = new Meteor.Collection(null);
+	var Sync  = syncCollections[name]  = new Meteor.Collection(name);
+	var Local = localCollections[name] = new Meteor.Collection(null);
 
 	if(Meteor.isClient) {
 		new LocalPersist(Local, name);
+		Tracker.autorun(function() {
+			Meteor.subscribe(name);
+		});
 	}
 
 	if(Meteor.isServer) {
@@ -30,6 +46,21 @@ function HybridCollection(name) {
 			}
 		});
 	}
+
+	Accounts.onLogin(function() {
+		//TODO: this will eat data
+		Local.find().forEach(function(doc) {
+			upsert(Sync, doc._id, {
+				$set: _.omit(doc, 'owner'),
+				$setOnInsert: {
+					owner: Meteor.userId()
+				}
+			}, function(err) {
+				if(err) throw err;
+				Local.remove({});
+			});
+		});
+	});
 
 	return function() {
 		return Meteor.user() ? Sync : Local;

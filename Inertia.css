@@ -1,5 +1,9 @@
 * { box-sizing: border-box }
 
+body {
+	font-family: "fira-sans", sans-serif;
+}
+
 .projects {
 	list-style: none;
 	margin: 0 auto;
@@ -17,7 +21,6 @@
 	padding: 20px;
 	border-radius: 5px;
 	color: white;
-	font-family: "fira-sans", sans-serif;
 	-webkit-tap-highlight-color: transparent;
 
 	border-style: solid;

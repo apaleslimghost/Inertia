@@ -37,7 +37,7 @@ Template.project.events({
 
 	'keyup input': function(ev, template) {
 		if(ev.which === 13) {
-			Projects().upsert(this._id, {
+			upsert(Projects(), this._id, {
 				$set: {
 					name: ev.currentTarget.value,
 					updated: new Date,

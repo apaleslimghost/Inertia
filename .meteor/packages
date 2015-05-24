@@ -17,3 +17,4 @@ fastclick
 mrt:external-file-loader
 accounts-ui
 jeffm:local-persist
+accounts-password
