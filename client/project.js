@@ -3,24 +3,24 @@
 Template.project.events({
 	'click .project-stopped': function(ev, template) {
 		if(!template.editing.get()) {
-			var id = Timings.insert({
+			var id = Timings().insert({
 				projectId: this._id,
 				started: new Date
 			});
 
-			Projects.update(this._id, {$set: {inProgressTimer: id}});
+			Projects().update(this._id, {$set: {inProgressTimer: id}});
 		}
 	},
 
 	'click .project-inprogress': function(ev, template) {
-		var timing = Timings.findOne(this.inProgressTimer);
+		var timing = Timings().findOne(this.inProgressTimer);
 		var time = moment().diff(timing.started);
 
-		Timings.update(timing._id, {$set: {
+		Timings().update(timing._id, {$set: {
 			ended: new Date,
 			time: time
 		}});
-		Projects.update(this._id, {$unset: {inProgressTimer: null}});
+		Projects().update(this._id, {$unset: {inProgressTimer: null}});
 	},
 
 	'click .edit': function(ev, template) {
@@ -30,13 +30,13 @@ Template.project.events({
 	'click .delete': function(ev) {
 		ev.stopPropagation();
 		if(confirm('Delete ' + this.name + '?')) {
-			Projects.remove(this._id);
+			Projects().remove(this._id);
 		}
 	},
 
 	'keyup input': function(ev, template) {
 		if(ev.which === 13) {
-			Projects.upsert(this._id, {
+			Projects().upsert(this._id, {
 				$set: {
 					name: ev.currentTarget.value,
 					updated: new Date,
@@ -100,7 +100,7 @@ Template.project.helpers({
 	},
 
 	timeElapsed: function() {
-		var timing = this.inProgressTimer && Timings.findOne(this.inProgressTimer);
+		var timing = this.inProgressTimer && Timings().findOne(this.inProgressTimer);
 		if(timing) {
 			return formatInterval(moment.duration(Chronos.liveMoment().diff(timing.started)));
 		}
@@ -111,11 +111,11 @@ Template.project.helpers({
 	},
 
 	timings: function() {
-		return Timings.find({projectId: this._id});
+		return Timings().find({projectId: this._id});
 	},
 
 	total: function() {
-		return formatInterval(Timings.find({projectId: this._id}).fetch().reduce(function(total, timing) {
+		return formatInterval(Timings().find({projectId: this._id}).fetch().reduce(function(total, timing) {
 			return total.add(timing.time, 'ms');
 		}, moment.duration(0)));
 	},
