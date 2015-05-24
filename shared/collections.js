@@ -47,8 +47,21 @@ function HybridCollection(name) {
 		});
 	}
 
-	Accounts.onLogin(function() {
-		//TODO: this will eat data
+
+
+	return function() {
+		return Meteor.user() ? Sync : Local;
+	};
+}
+
+Projects = HybridCollection('projects');
+Timings = HybridCollection('timings');
+
+Accounts.onLogin(function() {
+	//TODO: this will eat data
+	Object.keys(localCollections).forEach(function(col) {
+		var Local = localCollections[col];
+		var Sync  = syncCollections[col];
 		Local.find().forEach(function(doc) {
 			upsert(Sync, doc._id, {
 				$set: _.omit(doc, 'owner'),
@@ -61,12 +74,4 @@ function HybridCollection(name) {
 			});
 		});
 	});
-
-	return function() {
-		return Meteor.user() ? Sync : Local;
-	};
-}
-
-Projects = HybridCollection('projects');
-Timings = HybridCollection('timings');
-
+});
