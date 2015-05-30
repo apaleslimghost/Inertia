@@ -25,6 +25,7 @@ htmljs@1.0.4
 http@1.1.0
 id-map@1.0.3
 jeffm:local-persist@1.1.0
+johnantoni:meteor-transit@0.0.1
 jquery@1.11.3_2
 json@1.0.3
 keiths:octicons@1.2.2

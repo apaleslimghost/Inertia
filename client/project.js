@@ -1,5 +1,3 @@
-
-
 Template.project.events({
 	'click .project-stopped': function(ev, template) {
 		if(!template.editing.get()) {
@@ -37,6 +35,15 @@ Template.project.events({
 
 	'keyup input': function(ev, template) {
 		if(ev.which === 13) {
+			var current = Projects().findOne({name: ev.currentTarget.value});
+			if(current) {
+				$('.project-' + current._id).transition({scale: 1.05}, 'fast', function() {
+					$('.project-' + current._id).transition({scale: 1}, 'fast');
+				});
+
+				return;
+			}
+
 			upsert(Projects(), this._id, {
 				$set: {
 					name: ev.currentTarget.value,
