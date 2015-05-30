@@ -1,4 +1,5 @@
 <template name="project">
+<li class="project">
 {{#if _id}}
 <style>
 .project-{{_id}} {
@@ -22,7 +23,7 @@
 }
 </style>
 {{/if}}
-<li class="project project-{{_id}} {{#if editing}}project-editing{{else}}{{#if inProgress}}project-inprogress{{else}}project-stopped{{/if}}{{/if}}">
+<div class="project-button project-{{_id}} {{#if editing}}project-editing{{else}}{{#if inProgress}}project-inprogress{{else}}project-stopped{{/if}}{{/if}}">
 	{{#if editing}}
 		<input class="project-name project-name-edit" type="text" placeholder="Add project..." value="{{ name }}" required>
 		<div class="project-enter-prompt">↩︎</div>
@@ -36,5 +37,11 @@
 			{{/if}}
 		</time>
 	{{/if}}
+</div>
+
+<aside class="project-toolbar">
+	<span class="octicon octicon-pencil"></span>
+	<span class="octicon octicon-pulse"></span>
+</aside>
 </li>
 </template>
