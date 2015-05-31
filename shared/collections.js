@@ -57,21 +57,53 @@ function HybridCollection(name) {
 Projects = HybridCollection('projects');
 Timings = HybridCollection('timings');
 
-Accounts.onLogin(function() {
-	//TODO: this will eat data
-	Object.keys(localCollections).forEach(function(col) {
-		var Local = localCollections[col];
-		var Sync  = syncCollections[col];
-		Local.find().forEach(function(doc) {
-			upsert(Sync, doc._id, {
-				$set: _.omit(doc, 'owner'),
-				$setOnInsert: {
-					owner: Meteor.userId()
-				}
-			}, function(err) {
-				if(err) throw err;
-				Local.remove({});
-			});
-		});
+if(Meteor.isServer) {
+	Accounts.onCreateUser(function(options, user) {
+		if(options.profile) {
+			user.profile = options.profile;
+		}
+
+		user.newlyCreated = true;
+
+		return user;
 	});
-});
+
+	Meteor.publish("userdata", function () {
+		if (this.userId) {
+			return Meteor.users.find({_id: this.userId}, {fields: {'newlyCreated': 1}});
+		} else {
+			this.ready();
+		}
+	});
+}
+
+if(Meteor.isClient) {
+	Tracker.autorun(function() {
+		Meteor.subscribe('userdata');
+	});
+
+	Accounts.onLogin(function() {
+		if(Meteor.user().newlyCreated) {
+			//TODO: this will eat data
+			Object.keys(localCollections).forEach(function(col) {
+				var Local = localCollections[col];
+				var Sync  = syncCollections[col];
+				Local.find().forEach(function(doc) {
+					upsert(Sync, doc._id, {
+						$set: _.omit(doc, 'owner'),
+						$setOnInsert: {
+							owner: Meteor.userId()
+						}
+					}, function(err) {
+						if(err) throw err;
+						Local.remove({});
+					});
+				});
+			});
+
+			Meteor.users.update(Meteor.userId(), {
+				$unset: {newlyCreated: ''}
+			});
+		}
+	});
+}
