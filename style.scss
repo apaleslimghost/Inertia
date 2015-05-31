@@ -191,8 +191,9 @@ $clock-base-speed: 60s;
 		@extend %hand;
 		border-width: 0 1px 0;
 		width: 1px;
-		height: 4px;
+		height: 5px;
 		left: 6.5px;
+		border-radius: 1px;
 		animation-duration: $clock-base-speed;
 	}
 }
