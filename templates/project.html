@@ -32,6 +32,10 @@
 		<time class="project-time">
 			{{#if inProgress}}
 				{{{ timeElapsed }}}
+				<div class="project-timing-indicator clock">
+					<div class="big-hand"></div>
+					<div class="little-hand"></div>
+				</div>
 			{{else}}
 				{{{ total }}}
 			{{/if}}

@@ -147,3 +147,52 @@ body {
 	font-weight: 100;
 	font-style: italic;
 }
+
+.project-timing-indicator {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 8px;
+}
+
+@keyframes spin {
+	0% { transform: rotate(0); }
+	100% { transform: rotate(359.9deg); }
+}
+
+%hand {
+	border-style: solid;
+	position: absolute;
+	animation-name: spin;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	left: 7px;
+	bottom: 50%;
+	transform-origin: bottom;
+}
+
+$clock-base-speed: 60s;
+
+.clock {
+	border: 1px solid;
+	width: 16px;
+	height: 16px;
+	border-radius: 8px;
+
+	.big-hand {
+		@extend %hand;
+		animation-duration: ($clock-base-speed / 60);
+		border-width: 0 1px 0 0;
+		width: 1px;
+		height: 6px;
+	}
+
+	.little-hand {
+		@extend %hand;
+		border-width: 0 1px 0;
+		width: 1px;
+		height: 4px;
+		left: 6.5px;
+		animation-duration: $clock-base-speed;
+	}
+}
