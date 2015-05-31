@@ -27,6 +27,16 @@ function HybridCollection(name) {
 			return Sync.find({owner: this.userId});
 		});
 
+		Sync.before.insert(function(userId, doc) {
+			doc.created = new Date;
+			doc.owner = userId;
+		});
+
+		Sync.before.update(function(userId, doc, fields, modifier) {
+			modifier.$set = modifier.$set || {};
+			modifier.$set.updated = new Date;
+		});
+
 		Sync.allow({
 			insert: function (userId, doc) {
 				return (userId && doc.owner === userId);
@@ -46,8 +56,6 @@ function HybridCollection(name) {
 			}
 		});
 	}
-
-
 
 	return function() {
 		return Meteor.user() ? Sync : Local;

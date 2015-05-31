@@ -20,3 +20,5 @@ jeffm:local-persist
 accounts-password
 johnantoni:meteor-transit
 meteorhacks:fast-render
+matb33:collection-hooks
+mizzao:timesync

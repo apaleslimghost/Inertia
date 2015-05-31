@@ -4,7 +4,6 @@ Template.project.events({
 			var id = Timings().insert({
 				owner: Meteor.userId(),
 				projectId: this._id,
-				started: new Date
 			});
 
 			Projects().update(this._id, {$set: {inProgressTimer: id}});
@@ -13,10 +12,11 @@ Template.project.events({
 
 	'click .project-inprogress': function(ev, template) {
 		var timing = Timings().findOne(this.inProgressTimer);
-		var time = moment().diff(timing.started);
+		var now = TimeSync.serverTime();
+		var time = moment(now).diff(timing.created);
 
 		Timings().update(timing._id, {$set: {
-			ended: new Date,
+			ended: new Date(now),
 			time: time
 		}});
 		Projects().update(this._id, {$unset: {inProgressTimer: null}});
@@ -47,12 +47,7 @@ Template.project.events({
 			upsert(Projects(), this._id, {
 				$set: {
 					name: ev.currentTarget.value,
-					updated: new Date,
 					colour: createColour(ev.currentTarget.value)
-				},
-				$setOnInsert: {
-					owner: Meteor.userId(),
-					created: new Date
 				}
 			});
 			ev.currentTarget.value = '';
@@ -115,7 +110,8 @@ Template.project.helpers({
 	timeElapsed: function() {
 		var timing = this.inProgressTimer && Timings().findOne(this.inProgressTimer);
 		if(timing) {
-			return formatInterval(moment.duration(Chronos.liveMoment().diff(timing.started)));
+			var now = moment(TimeSync.serverTime());
+			return formatInterval(moment.duration(now.diff(timing.created)));
 		}
 	},
 
