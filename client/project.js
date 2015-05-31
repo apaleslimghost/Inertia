@@ -37,8 +37,8 @@ Template.project.events({
 		if(ev.which === 13) {
 			var current = Projects().findOne({name: ev.currentTarget.value});
 			if(current) {
-				$('.project-' + current._id).transition({scale: 1.05}, 'fast', function() {
-					$('.project-' + current._id).transition({scale: 1}, 'fast');
+				$('.project-' + current._id).transition({scale: 1.05}, 50, function() {
+					$('.project-' + current._id).transition({scale: 1}, 100);
 				});
 
 				return;
@@ -68,14 +68,15 @@ Template.project.onCreated(function() {
 
 function adjustSize(container, name, time) {
 	return function() {
-		if(20 + name.width() + time.width() > container.width()) {
-			container.css('font-size', (3 * container.width() / (name.width() + time.width() + 20)) + 'rem');
+		var fudge = 20;
+		if(fudge + name.width() + time.width() > container.width()) {
+			container.css('font-size', (3 * container.width() / (name.width() + time.width() + fudge)) + 'rem');
 		}
 	};
 }
 
 Template.project.onRendered(function() {
-	var doAdjustSize = adjustSize(this.$('.project'), this.$('.project-name'), this.$('.project-time'));
+	var doAdjustSize = adjustSize(this.$('.project-button'), this.$('.project-name'), this.$('.project-time'));
 	fontsLoaded(doAdjustSize);
 });
 
