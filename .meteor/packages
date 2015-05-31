@@ -19,3 +19,4 @@ accounts-ui
 jeffm:local-persist
 accounts-password
 johnantoni:meteor-transit
+meteorhacks:fast-render
