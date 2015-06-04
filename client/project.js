@@ -76,7 +76,6 @@ function adjustSize(container, name, time) {
 		var nameWidth = name.width();
 		var timeWidth = time.length ? time.width() + fudge : 0;
 		var containerWidth = container.width();
-		console.log(nameWidth, timeWidth, containerWidth);
 		if(nameWidth + timeWidth > containerWidth) {
 			container.css('font-size', (size * containerWidth / (nameWidth + timeWidth)) + 'rem');
 		}
