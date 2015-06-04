@@ -23,11 +23,25 @@
 }
 </style>
 {{/if}}
-<div class="project-button project-{{_id}} {{#if editing}}project-editing{{else}}{{#if inProgress}}project-inprogress{{else}}project-stopped{{/if}}{{/if}}">
+<div class="
+	project-button
+	{{#if _id}}
+		project-exists
+		project-{{_id}}
+		{{#if inProgress}}
+			project-inprogress
+		{{else}}
+			project-stopped
+		{{/if}}
+	{{else}}
+	project-add {{#unless editing}}project-edit-toggle{{/unless}}
+	{{/if}}
+	{{#if editing}}project-editing{{/if}}">
 	{{#if editing}}
 		<input class="project-name project-name-edit" type="text" placeholder="Add project..." value="{{ name }}" required>
 		<div class="project-enter-prompt">↩︎</div>
 	{{else}}
+	{{#if _id}}
 		<h1 class="project-name">{{ name }}</h1>
 		<time class="project-time">
 			{{#if inProgress}}
@@ -40,6 +54,9 @@
 				{{{ total }}}
 			{{/if}}
 		</time>
+	{{else}}
+		<h1 class="project-name project-name-placeholder">Add project...</h1>
+	{{/if}}
 	{{/if}}
 </div>
 

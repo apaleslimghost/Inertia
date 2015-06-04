@@ -52,7 +52,7 @@ body {
 	transform: translateY(-2px);
 }
 
-.project:hover {
+.project-exists:hover {
 	.project-toolbar {
 		opacity: 1;
 	}
@@ -73,31 +73,14 @@ body {
 	margin-bottom: 5px;
 }
 
-.project-name-edit {
-	background: transparent;
-	border: 0 none;
-	font: inherit;
-	color: inherit;
-	width: 100%;
-	padding-right: 1em;
-
-	&:focus {
-		outline: none;
-
-		&:valid + .project-enter-prompt {
-			opacity: 1;
-		}
-	}
-
-	&::-webkit-input-placeholder {
-		transition: opacity 0.15s;
-		text-align: center;
-		color: #333;
-		opacity: 0.7;
-		padding-left: 1em;
-	}
+%placeholder {
+	text-align: center;
+	color: #333;
+	opacity: 0.7;
 }
 
+
+.project-add,
 .project-editing {
 	border: 1px solid rgba(0,0,0,0.2);
 }
@@ -108,6 +91,7 @@ body {
 	position: absolute;
 	right: 20px;
 	top: 20px;
+	font-size: 2rem;
 	line-height: 2;
 	font-style: italic;
 	font-family: sans-serif;
@@ -116,6 +100,7 @@ body {
 .project-name, .project-time {
 	display: block;
 	line-height: 1.4;
+	height: 1.4em;
 }
 
 .project-name {
@@ -124,9 +109,38 @@ body {
 	font-weight: 100;
 	font-style: italic;
 	font-size: inherit;
-	margin: 0
+	margin: 0;
 }
 
+.project-name-placeholder {
+	@extend %placeholder;
+	float: none;
+}
+
+.project-name-edit {
+	background: transparent;
+	border: 0 none;
+	font-family: inherit;
+	font-weight: inherit;
+	color: inherit;
+	width: 100%;
+	padding: 0 1em 0 0;
+	float: none;
+
+	&:focus {
+		outline: none;
+
+		&:valid + .project-enter-prompt {
+			opacity: 1;
+		}
+	}
+
+	&::-webkit-input-placeholder {
+		@extend %placeholder;
+		transition: opacity 0.15s;
+		padding-left: 1em;
+	}
+}
 .project-time {
 	float: right;
 	text-align: right;

@@ -22,7 +22,7 @@ Template.project.events({
 		Projects().update(this._id, {$unset: {inProgressTimer: null}});
 	},
 
-	'click .edit': function(ev, template) {
+	'click .project-edit-toggle': function(ev, template) {
 		template.editing.set(!template.editing.get());
 	},
 	
@@ -54,6 +54,12 @@ Template.project.events({
 			ev.currentTarget.blur();
 			template.editing.set(false);
 		}
+	},
+
+	'blur input': function(ev, template) {
+		if(!this._id && !ev.currentTarget.value) {
+			template.editing.set(false);
+		}
 	}
 });
 
@@ -64,8 +70,15 @@ Template.project.onCreated(function() {
 function adjustSize(container, name, time) {
 	return function() {
 		var fudge = 20;
-		if(fudge + name.width() + time.width() > container.width()) {
-			container.css('font-size', (3 * container.width() / (name.width() + time.width() + fudge)) + 'rem');
+		var bodySize = parseFloat($('body').css('font-size'));
+		var size = container.data('original-size') || parseFloat(container.css('font-size')) / bodySize;
+		container.data('original-size', size);
+		var nameWidth = name.width();
+		var timeWidth = time.length ? time.width() + fudge : 0;
+		var containerWidth = container.width();
+		console.log(nameWidth, timeWidth, containerWidth);
+		if(nameWidth + timeWidth > containerWidth) {
+			container.css('font-size', (size * containerWidth / (nameWidth + timeWidth)) + 'rem');
 		}
 	};
 }
@@ -73,6 +86,15 @@ function adjustSize(container, name, time) {
 Template.project.onRendered(function() {
 	var doAdjustSize = adjustSize(this.$('.project-button'), this.$('.project-name'), this.$('.project-time'));
 	fontsLoaded(doAdjustSize);
+
+	var that = this;
+	this.autorun(function() {
+		if(that.editing.get()) {
+			requestAnimationFrame(function() {
+				that.$('input').focus();
+			});
+		}
+	});
 });
 
 function formatInterval(ival) {
@@ -104,7 +126,7 @@ function createColour(name) {
 
 Template.project.helpers({
 	editing: function() {
-		return !this._id || Template.instance().editing.get();
+		return Template.instance().editing.get();
 	},
 
 	timeElapsed: function() {
