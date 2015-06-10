@@ -3,6 +3,7 @@ Template.project.events({
 		if(!template.editing.get()) {
 			var id = Timings().insert({
 				owner: Meteor.userId(),
+				created: TimeSync.serverTime(),
 				projectId: this._id,
 			});
 
