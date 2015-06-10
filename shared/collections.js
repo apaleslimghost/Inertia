@@ -39,7 +39,7 @@ function HybridCollection(name) {
 
 		Sync.allow({
 			insert: function (userId, doc) {
-				return (userId && doc.owner === userId);
+				return (!doc.owner || doc.owner === userId);
 			},
 			update: function (userId, doc, fields, modifier) {
 				return doc.owner === userId;
