@@ -93,7 +93,9 @@ body {
 	transition-duration: 0.15s;
 
 	border-left: 1px solid;
-	margin-left: -1px;
+	.project-not-editing {
+		margin-left: -1px;
+	}
 
 	z-index: 2; // border above main button
 	
