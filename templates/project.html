@@ -10,37 +10,44 @@
 			project-stopped
 		{{/if}}
 	{{else}}
-	project-add {{#unless editing}}project-edit-toggle{{/unless}}
+	project-add 
 	{{/if}}
-	{{#if editing}}project-editing{{/if}}">
+	{{#if editing}}
+		project-editing
+	{{else}}
+		project-not-editing
+	{{/if}}">
 {{#if _id}}
 <style>
 .project-{{_id}} .project-button {
 	background: {{baseColour}};
+}
+
+.project-{{_id}}.project-not-editing .project-button {
 	border-color: {{baseColour}};
 	box-shadow: 0 5px 0 {{darkColour2}};
 }
 
-.project-{{_id}} .project-button:hover {
+.project-{{_id}}.project-not-editing .project-button:hover {
 	background: {{activeColour}};
 	border-color: {{activeColour}};
 	box-shadow: 0 7px 0 {{darkColour2}};
 }
 
-.project-{{_id}} .project-button:active,
-.project-{{_id}} .project-button-active,
-.project-{{_id}} .project-button-active:hover {
+.project-{{_id}}.project-not-editing .project-button:active,
+.project-{{_id}}.project-not-editing .project-button-active,
+.project-{{_id}}.project-not-editing .project-button-active:hover {
 	border-color: {{darkColour2}};
 	background: {{darkColour1}};
 	box-shadow: 0 0 0 transparent;
 }
 
-.project-{{_id}} .project-toolbar {
+.project-{{_id}}.project-not-editing .project-toolbar {
 	border-color: {{darkColour2}};
 }
 </style>
 {{/if}}
-<div class="project-button project-button-main {{#if inProgress}}project-button-active{{/if}}">
+<div class="project-button project-button-main {{#if inProgress}}project-button-active{{/if}}" role="{{#unless _id}}{{#unless editing}}edit{{/unless}}{{/unless}}">
 	{{#if editing}}
 		<input class="project-name project-name-edit" type="text" placeholder="Add project..." value="{{ name }}" required>
 		<div class="project-enter-prompt">↩︎</div>
@@ -66,12 +73,21 @@
 
 {{#if _id}}
 <aside class="project-toolbar">
-	<button class="project-button">
+	{{#if editing}}
+	<button class="project-button" role="edit">
+		<span class="octicon octicon-check"></span>
+	</button>
+	<button class="project-button" role="delete">
+		<span class="octicon octicon-trashcan"></span>
+	</button>
+	{{else}}
+	<button class="project-button" role="edit">
 		<span class="octicon octicon-pencil"></span>
 	</button>
-	<button class="project-button">
+	<button class="project-button" role="graph">
 		<span class="octicon octicon-pulse"></span>
 	</button>
+	{{/if}}
 </aside>
 {{/if}}
 </li>

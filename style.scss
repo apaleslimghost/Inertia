@@ -42,7 +42,7 @@ body {
 
 	transition-duration: 0.15s;
 	transition-property: box-shadow, background, transform, border;
-	.project-exists &:not(.project-button-active):hover {
+	.project-exists.project-not-editing &:not(.project-button-active):hover {
 		transform: translateY(-2px);
 	}
 
@@ -57,7 +57,7 @@ body {
 	cursor: pointer;
 }
 
-.project-exists .project-button:not(.project-button-active):active,
+.project-exists.project-not-editing .project-button:not(.project-button-active):active,
 .project-button-active {
 	transform: translateY(5px);
 }
@@ -114,7 +114,8 @@ body {
 .project-add,
 .project-editing {
 	.project-button {
-		border: 1px solid rgba(0,0,0,0.2);
+		border: 1px solid rgba(0,0,0,0.4);
+		transform: translateY(2px);
 	}
 
 	.project-button-main {

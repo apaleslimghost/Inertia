@@ -23,11 +23,11 @@ Template.project.events({
 		Projects().update(this._id, {$unset: {inProgressTimer: null}});
 	},
 
-	'click .project-edit-toggle': function(ev, template) {
+	'click [role=edit]': function(ev, template) {
 		template.editing.set(!template.editing.get());
 	},
 	
-	'click .delete': function(ev) {
+	'click [role=delete]': function(ev) {
 		ev.stopPropagation();
 		if(confirm('Delete ' + this.name + '?')) {
 			Projects().remove(this._id);
