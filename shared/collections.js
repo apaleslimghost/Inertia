@@ -4,7 +4,7 @@ var localCollections = {};
 //TODO: this is stupid
 upsert = function upsert(collection, selector, doc, cb) {
 	if(collection.findOne(selector)) {
-		collection.update(selector, doc.$set, cb);
+		collection.update(selector, {$set: doc.$set}, cb);
 	} else {
 		var set = _.extend(doc.$set, doc.$setOnInsert);
 		collection.insert(set, cb);
