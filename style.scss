@@ -84,23 +84,28 @@ body {
 	display: flex;
 	flex-direction: column;
 
-	overflow: hidden;
+	overflow-x: hidden;
+	overflow-y: visible;
 	max-width: 50px;
-	padding-bottom: 5px;
-	margin-bottom: -5px;
+	padding: 2px 0 5px;
+	margin: -2px 0 -5px;
 
 	transition-property: max-width, opacity;
 	transition-duration: 0.15s;
 
-	border-left: 1px solid;
-	.project-not-editing {
+	.project-not-editing & {
 		margin-left: -1px;
+	}
+
+	.project-editing & {
+		margin-left: 1px;
 	}
 
 	z-index: 2; // border above main button
 	
 	.project-button {
 		flex: 1;
+		border-width: 0 0 0 1px;
 		padding: 0 15px;
 		margin-bottom: 1px;
 	}
