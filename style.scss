@@ -41,7 +41,7 @@ body {
 	border-width: 3px 1px 0;
 
 	transition-duration: 0.15s;
-	transition-property: box-shadow, background, transform, border;
+	transition-property: box-shadow, background, transform, border, border-radius;
 	.project-exists.project-not-editing &:not(.project-button-active):hover {
 		transform: translateY(-2px);
 	}
@@ -74,7 +74,8 @@ body {
 	&.project-button-active {
 		border-radius: 5px;
 		+ .project-toolbar {
-			display: none;
+			max-width: 0;
+			opacity: 0;
 		}
 	}
 }
@@ -82,6 +83,14 @@ body {
 .project-toolbar {
 	display: flex;
 	flex-direction: column;
+
+	overflow: hidden;
+	max-width: 50px;
+	padding-bottom: 5px;
+	margin-bottom: -5px;
+
+	transition-property: max-width, opacity;
+	transition-duration: 0.2s;
 
 	border-left: 1px solid;
 	margin-left: -1px;
