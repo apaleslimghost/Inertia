@@ -1,33 +1,9 @@
 <template name="project">
-<li class="project">
-{{#if _id}}
-<style>
-.project-{{_id}} {
-	background: {{baseColour}};
-	border-color: {{baseColour}};
-}
-
-.project-{{_id}}.project-stopped {
-	box-shadow: 0 5px 0 {{darkColour2}};
-}
-
-.project-{{_id}}.project-stopped:hover {
-	background: {{activeColour}};
-	border-color: {{activeColour}};
-	box-shadow: 0 7px 0 {{darkColour2}};
-}
-
-.project-{{_id}}.project-inprogress {
-	border-color: {{darkColour2}};
-	background: {{darkColour1}};
-}
-</style>
-{{/if}}
-<div class="
-	project-button
+<li class="
+	project
 	{{#if _id}}
-		project-exists
 		project-{{_id}}
+		project-exists
 		{{#if inProgress}}
 			project-inprogress
 		{{else}}
@@ -37,6 +13,32 @@
 	project-add {{#unless editing}}project-edit-toggle{{/unless}}
 	{{/if}}
 	{{#if editing}}project-editing{{/if}}">
+{{#if _id}}
+<style>
+.project-{{_id}} .project-button {
+	background: {{baseColour}};
+	border-color: {{baseColour}};
+	box-shadow: 0 5px 0 {{darkColour2}};
+}
+
+.project-{{_id}} .project-button:hover {
+	background: {{activeColour}};
+	border-color: {{activeColour}};
+	box-shadow: 0 7px 0 {{darkColour2}};
+}
+
+.project-{{_id}} .project-button:active,
+.project-{{_id}} .project-button-active {
+	border-color: {{darkColour2}};
+	background: {{darkColour1}};
+}
+
+.project-{{_id}} .project-toolbar {
+	border-color: {{darkColour2}};
+}
+</style>
+{{/if}}
+<div class="project-button project-button-main {{#if inProgress}}project-button-active{{/if}}">
 	{{#if editing}}
 		<input class="project-name project-name-edit" type="text" placeholder="Add project..." value="{{ name }}" required>
 		<div class="project-enter-prompt">↩︎</div>
@@ -61,8 +63,12 @@
 </div>
 
 <aside class="project-toolbar">
-	<span class="octicon octicon-pencil"></span>
-	<span class="octicon octicon-pulse"></span>
+	<button class="project-button">
+		<span class="octicon octicon-pencil"></span>
+	</button>
+	<button class="project-button">
+		<span class="octicon octicon-pulse"></span>
+	</button>
 </aside>
 </li>
 </template>

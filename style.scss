@@ -25,15 +25,14 @@ body {
 
 .project {
 	font-size: 2.4rem;
-	position: relative;
+	margin: 10px;
+	display: flex;
 }
 
 .project-button {
 	@include clearfix;
 	background: #ddd;
-	margin: 10px;
 	padding: 20px;
-	border-radius: 5px;
 	color: white;
 	-webkit-tap-highlight-color: transparent;
 
@@ -42,30 +41,52 @@ body {
 
 	transition-duration: 0.15s;
 	transition-property: box-shadow, background, transform, border;
-}
+	&:hover {
+		transform: translateY(-2px);
+	}
 
-.project-inprogress, .project-stopped {
 	cursor: pointer;
 }
 
-.project-stopped:hover {
-	transform: translateY(-2px);
+.octicon {
+	cursor: inherit;
 }
 
-.project-exists:hover {
-	.project-toolbar {
-		opacity: 1;
-	}
+.project-button-main {
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	flex: 1;
 }
 
 .project-toolbar {
-	position: absolute;
-	transition: opacity 0.15s;
-	opacity: 0;
-	top: 0;
-	left: 100%;
-	color: #666;
-	line-height: 20px;
+	display: flex;
+	flex-direction: column;
+
+	border-left: 1px solid;
+	margin-left: -1px;
+
+	z-index: 2; // border above main button
+	
+	.project-button {
+		flex: 1;
+		padding: 0 15px;
+		margin-bottom: 1px;
+	}
+
+	@for $i from 1 through 10 {
+		.project-button:nth-child(#{$i}) {
+			z-index: $i;
+		}
+	}
+
+	.project-button:first-child {
+		border-top-right-radius: 5px;
+	}
+
+	.project-button:last-child {
+		border-bottom-right-radius: 5px;
+		margin: 0;
+	}
 }
 
 .project-inprogress {
