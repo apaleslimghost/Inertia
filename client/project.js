@@ -1,5 +1,5 @@
 Template.project.events({
-	'click .project-stopped': function(ev, template) {
+	'click .project-stopped .project-button-main': function(ev, template) {
 		if(!template.editing.get()) {
 			var id = Timings().insert({
 				owner: Meteor.userId(),
@@ -11,7 +11,7 @@ Template.project.events({
 		}
 	},
 
-	'click .project-inprogress': function(ev, template) {
+	'click .project-inprogress .project-button-main': function(ev, template) {
 		var timing = Timings().findOne(this.inProgressTimer);
 		var now = TimeSync.serverTime();
 		var time = moment(now).diff(timing.created);

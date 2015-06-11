@@ -41,11 +41,16 @@ body {
 
 	transition-duration: 0.15s;
 	transition-property: box-shadow, background, transform, border;
-	&:hover {
+	&:not(.project-button-active):hover {
 		transform: translateY(-2px);
 	}
 
 	cursor: pointer;
+}
+
+.project-button:active,
+.project-button-active {
+	transform: translateY(5px);
 }
 
 .octicon {
@@ -87,11 +92,6 @@ body {
 		border-bottom-right-radius: 5px;
 		margin: 0;
 	}
-}
-
-.project-inprogress {
-	transform: translateY(5px);
-	margin-bottom: 5px;
 }
 
 %placeholder {

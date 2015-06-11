@@ -21,7 +21,7 @@
 	box-shadow: 0 5px 0 {{darkColour2}};
 }
 
-.project-{{_id}} .project-button:hover {
+.project-{{_id}} .project-button:not(.project-button-active):hover {
 	background: {{activeColour}};
 	border-color: {{activeColour}};
 	box-shadow: 0 7px 0 {{darkColour2}};
@@ -31,6 +31,7 @@
 .project-{{_id}} .project-button-active {
 	border-color: {{darkColour2}};
 	background: {{darkColour1}};
+	box-shadow: 0 0 0 transparent;
 }
 
 .project-{{_id}} .project-toolbar {
