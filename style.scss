@@ -289,12 +289,12 @@ $clock-base-speed: 60s;
 	padding: 0;
 }
 
-.timing-list-item {
+.timings li {
 	display: flex;
 	margin: 0.5rem;
 }
 
-.timing-ended {
+.timing-ended, .timings-nope {
 	font-weight: 100;
 	font-style: italic;
 }

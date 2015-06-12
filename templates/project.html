@@ -59,6 +59,8 @@
 	<ul class="timings">
 		{{#each timings}}
 			{{> timing}}
+		{{else}}
+			<li class="timings-nope">You've not recorded any time for {{name}} yet.</li>
 		{{/each}}
 	</ul>
 	{{else}}
