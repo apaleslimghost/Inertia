@@ -1,5 +1,5 @@
 Template.project.events({
-	'click .project-stopped .project-button-main': function(ev, template) {
+	'click .project-stopped.project-clickable .project-button-main': function(ev, template) {
 		if(!template.editing.get()) {
 			var id = Timings().insert({
 				owner: Meteor.userId(),
@@ -11,7 +11,7 @@ Template.project.events({
 		}
 	},
 
-	'click .project-inprogress .project-button-main': function(ev, template) {
+	'click .project-inprogress.project-clickable .project-button-main': function(ev, template) {
 		var timing = Timings().findOne(this.inProgressTimer);
 		var now = TimeSync.serverTime();
 		var time = moment(now).diff(timing.created);
@@ -23,10 +23,15 @@ Template.project.events({
 		Projects().update(this._id, {$unset: {inProgressTimer: null}});
 	},
 
+	
 	'click [role=edit]': function(ev, template) {
 		template.editing.set(!template.editing.get());
 	},
-	
+
+	'click [role=list]': function(ev, template) {
+		template.showList.set(!template.showList.get());
+	},
+
 	'click [role=delete]': function(ev) {
 		ev.stopPropagation();
 		if(confirm('Delete ' + this.name + '?')) {
@@ -66,6 +71,7 @@ Template.project.events({
 
 Template.project.onCreated(function() {
 	this.editing = new ReactiveVar(false);
+	this.showList = new ReactiveVar(false);
 });
 
 function adjustSize(container, name, time) {
@@ -97,19 +103,6 @@ Template.project.onRendered(function() {
 	});
 });
 
-function formatInterval(ival) {
-	return _.compact([
-		ival.hours() && _.padLeft(ival.hours(), 2, '0'),
-		ival.minutes() || '0',
-		ival.hours() ? false : _.padLeft(ival.seconds(), 2, '0') + 's'
-	]).join(':').split('').map(function(c) {
-		var extra = c === ':'? 'timecolon'
-		          : c === 's'? 'timesecond'
-		          : '';
-		return '<span class="timechar ' + extra + '">' + c + '</span>';
-	}).join('');
-}
-
 function hash(name) {
 	return [].reduce.call(name, function(hash, chr) {
 		return ((hash << 5) - hash) + chr.charCodeAt(0);
@@ -129,6 +122,14 @@ Template.project.helpers({
 		return Template.instance().editing.get();
 	},
 
+	showList: function() {
+		return Template.instance().showList.get();
+	},
+
+	notButton: function() {
+		return Template.instance().showList.get() || Template.instance().editing.get();
+	},
+
 	timeElapsed: function() {
 		var timing = this.inProgressTimer && Timings().findOne(this.inProgressTimer);
 		if(timing) {
@@ -142,7 +143,7 @@ Template.project.helpers({
 	},
 
 	timings: function() {
-		return Timings().find({projectId: this._id});
+		return Timings().find({projectId: this._id}, {sort: {ended: 'desc'}});
 	},
 
 	total: function() {

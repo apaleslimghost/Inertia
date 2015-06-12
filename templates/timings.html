@@ -1,0 +1,9 @@
+<template name="timing">
+<li class="timing-list-item">
+	<span class="timing-duration">{{{formatted}}}</span>
+	<time class="timing-ended" datetime="{{isoTime}}">{{friendlyTime}}</time>
+	<button class="timing-button" role="delete">
+		<span class="octicon octicon-trashcan"></span>
+	</button>
+</li>
+</template>

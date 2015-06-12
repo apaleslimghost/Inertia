@@ -20,12 +20,12 @@ body {
 	margin: 0 auto;
 	padding: 0;
 	width: 100%;
-	max-width: 400px;
+	max-width: 25rem;
 }
 
 .project {
 	font-size: 2.4rem;
-	margin: 10px;
+	margin: 0.675rem;
 	display: flex;
 	color: white;
 }
@@ -33,7 +33,7 @@ body {
 .project-button {
 	@include clearfix;
 	background: #ddd;
-	padding: 20px;
+	padding: 1.25rem;
 	-webkit-tap-highlight-color: transparent;
 	color: inherit;
 
@@ -42,12 +42,13 @@ body {
 
 	transition-duration: 0.15s;
 	transition-property: box-shadow, background, transform, border, border-radius;
-	.project-exists.project-not-editing &:not(.project-button-active):hover {
+	.project-exists.project-clickable &:not(.project-button-active):hover {
 		transform: translateY(-2px);
 	}
 
 	&:last-child {
-		border-radius: 5px;
+		border-top-right-radius: 5px;
+		border-bottom-right-radius: 5px;
 	}
 
 	&:focus {
@@ -57,7 +58,7 @@ body {
 	cursor: pointer;
 }
 
-.project-exists.project-not-editing .project-button:not(.project-button-active):active,
+.project-exists.project-clickable .project-button:not(.project-button-active):active,
 .project-button-active {
 	transform: translateY(5px);
 }
@@ -86,18 +87,18 @@ body {
 
 	overflow-x: hidden;
 	overflow-y: visible;
-	max-width: 50px;
+	max-width: 3rem;
 	padding: 2px 0 5px;
 	margin: -2px 0 -5px;
 
 	transition-property: max-width, opacity;
 	transition-duration: 0.15s;
 
-	.project-not-editing & {
+	.project-clickable & {
 		margin-left: -1px;
 	}
 
-	.project-editing & {
+	.project-info & {
 		margin-left: 1px;
 	}
 
@@ -106,7 +107,7 @@ body {
 	.project-button {
 		flex: 1;
 		border-width: 0 0 0 1px;
-		padding: 0 15px;
+		padding: 0 1rem;
 		margin-bottom: 1px;
 	}
 
@@ -121,7 +122,6 @@ body {
 	}
 
 	.project-button:last-child {
-		border-radius: 0;
 		border-bottom-right-radius: 5px;
 		margin: 0;
 	}
@@ -135,7 +135,7 @@ body {
 
 
 .project-add,
-.project-editing {
+.project-info {
 	.project-button {
 		border: 1px solid rgba(0,0,0,0.4);
 		transform: translateY(2px);
@@ -146,12 +146,20 @@ body {
 	}
 }
 
+.project-list {
+	.project-button-main {
+		padding: 0;
+		height: 5.86rem;
+		overflow-y: auto;
+	}
+}
+
 .project-enter-prompt {
 	opacity: 0;
 	transition: opacity 0.2s;
 	position: absolute;
-	right: 20px;
-	top: 20px;
+	right: 1.25rem;
+	top: 1.25rem;
 	font-size: 2rem;
 	line-height: 2;
 	font-style: italic;
@@ -227,7 +235,7 @@ body {
 	position: absolute;
 	top: 0;
 	right: 0;
-	margin: 8px;
+	margin: 0.5rem;
 }
 
 @keyframes spin {
@@ -270,5 +278,46 @@ $clock-base-speed: 60s;
 		left: 6.5px;
 		border-radius: 1px;
 		animation-duration: $clock-base-speed;
+	}
+}
+
+.timings {
+	font-size: 1.5rem;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.timing-list-item {
+	display: flex;
+	margin: 0.5rem;
+}
+
+.timing-ended {
+	font-weight: 100;
+	font-style: italic;
+}
+
+.timing-duration {
+	flex: 1;
+	font-weight: bold;
+}
+
+.timing-button {
+	border: 0 none;
+	padding: 0.5rem 0.6rem;
+	margin-left: 0.5rem;
+	text-align: center;
+	color: inherit;
+	background: rgba(0,0,0,0.1);
+	border-radius: 2px;
+	cursor: pointer;
+
+	&:hover {
+		background: rgba(0,0,0,0.15);
+	}
+	
+	&:active {
+		background: rgba(0,0,0,0.2);
 	}
 }
