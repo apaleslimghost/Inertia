@@ -117,13 +117,14 @@ body {
 		}
 	}
 
-	.project-button:first-child {
-		border-top-right-radius: 5px;
-	}
-
 	.project-button:last-child {
+		border-radius: 0;
 		border-bottom-right-radius: 5px;
 		margin: 0;
+	}
+
+	.project-button:first-child {
+		border-top-right-radius: 5px;
 	}
 }
 
@@ -282,7 +283,7 @@ $clock-base-speed: 60s;
 }
 
 .timings {
-	font-size: 1.5rem;
+	font-size: 1.2rem;
 	list-style: none;
 	margin: 0;
 	padding: 0;
@@ -305,8 +306,8 @@ $clock-base-speed: 60s;
 
 .timing-button {
 	border: 0 none;
-	padding: 0.5rem 0.6rem;
-	margin-left: 0.5rem;
+	padding: 0.5em 0.6em;
+	margin-left: 0.5em;
 	text-align: center;
 	color: inherit;
 	background: rgba(0,0,0,0.1);
