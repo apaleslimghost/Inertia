@@ -36,6 +36,9 @@ Template.project.events({
 		ev.stopPropagation();
 		if(confirm('Delete ' + this.name + '?')) {
 			Projects().remove(this._id);
+			Timings().find({projectId: this._id}).forEach(function(t) {
+				Timings().remove(t._id);
+			});
 		}
 	},
 
