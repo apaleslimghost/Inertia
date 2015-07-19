@@ -12,15 +12,52 @@
 }
 
 body {
+	margin: 60px 0 0;
 	font-family: "fira-sans", sans-serif;
 }
 
-.projects {
-	list-style: none;
+.container {
 	margin: 0 auto;
 	padding: 0;
 	width: 100%;
 	max-width: 25rem;
+}
+
+header {
+	background: #dde9f2;
+	box-shadow: 0 5px 0 #bbc9d2;
+	position: fixed;
+	z-index: 10000;
+	top: 0;
+	left: 0;
+	right: 0;
+
+	height: 48px;
+
+	.container {
+		padding: 0 0.675rem;
+	}
+
+	h1 {
+		float: left;
+		margin: 0;
+		img {
+			height: 24px;
+			width: auto;
+			margin: 12px 0;
+		}
+	}
+
+	.login-buttons-dropdown-align-right {
+		float: right;
+		display: inline-block;
+		line-height: 48px !important;
+	}
+}
+
+.projects {
+	@extend .container;
+	list-style: none;
 }
 
 .project {
