@@ -1,3 +1,5 @@
+@import "scss/flexbox";
+
 * { box-sizing: border-box }
 
 @mixin clearfix() {
@@ -61,9 +63,9 @@ header {
 }
 
 .project {
+	@include flexbox;
 	font-size: 2.4rem;
 	margin: 0.675rem;
-	display: flex;
 	color: white;
 }
 
@@ -107,7 +109,7 @@ header {
 .project-button-main {
 	border-top-left-radius: 5px;
 	border-bottom-left-radius: 5px;
-	flex: 1;
+	@include flex(1);
 
 	&.project-button-active {
 		border-radius: 5px;
@@ -119,8 +121,8 @@ header {
 }
 
 .project-toolbar {
-	display: flex;
-	flex-direction: column;
+	@include flexbox;
+	@include flex-direction(column);
 
 	overflow-x: hidden;
 	overflow-y: visible;
@@ -142,7 +144,7 @@ header {
 	z-index: 2; // border above main button
 	
 	.project-button {
-		flex: 1;
+		@include flex(1);
 		border-width: 0 0 0 1px;
 		padding: 0 1rem;
 		margin-bottom: 1px;
@@ -337,7 +339,7 @@ $clock-base-speed: 60s;
 }
 
 .timing-duration {
-	flex: 1;
+	@include flex(1);
 	font-weight: bold;
 }
 
